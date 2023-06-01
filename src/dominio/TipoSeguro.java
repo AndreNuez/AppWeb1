@@ -1,38 +1,34 @@
 package dominio;
 
 public class TipoSeguro {
-	
-	private int idTipo;
-	private String Descripcion;
-	
-	public TipoSeguro() {
-		
-	}
 
+	private int idTipo;
+	private String descripcion;
+	
 	public TipoSeguro(int idTipo, String descripcion) {
+
 		this.idTipo = idTipo;
-		Descripcion = descripcion;
+		this.descripcion = descripcion;
 	}
+	
+	public TipoSeguro() { }
 
 	public int getIdTipo() {
 		return idTipo;
 	}
-
 	public void setIdTipo(int idTipo) {
 		this.idTipo = idTipo;
 	}
-
 	public String getDescripcion() {
-		return Descripcion;
+		return descripcion;
 	}
-
 	public void setDescripcion(String descripcion) {
-		Descripcion = descripcion;
+		this.descripcion = descripcion;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "TipoSeguro [idTipo=" + idTipo + ", Descripcion=" + Descripcion + "]";
+		return "tipoSeguros [idTipo=" + idTipo + ", descripcion=" + descripcion + "]";
 	}
 	
 	

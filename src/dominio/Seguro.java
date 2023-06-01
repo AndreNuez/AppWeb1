@@ -2,65 +2,69 @@ package dominio;
 
 public class Seguro {
 	
-	private int idSeguro;
+	private int ID;
 	private String descripcion;
-	private int idTipo;
-	private double costoContratacion;
-	private double costoAsegurado;
+	private int tipo;
+	private double costo;
+	private double costoMax;
 	
-	public Seguro() {
+	public Seguro ()
+	{
 		
 	}
-
-	public Seguro(int idSeguro, String descripcion, int idTipo, double costoContratacion, double costoAsegurado) {
-		this.idSeguro = idSeguro;
+	public Seguro(String descripcion, int tipo, double costo, double costoMax) {
+	
 		this.descripcion = descripcion;
-		this.idTipo = idTipo;
-		this.costoContratacion = costoContratacion;
-		this.costoAsegurado = costoAsegurado;
-	}
-
-	public int getIdSeguro() {
-		return idSeguro;
+		this.tipo = tipo;
+		this.costo = costo;
+		this.costoMax = costoMax;
 	}
 
 	public String getDescripcion() {
 		return descripcion;
 	}
 
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-	public int getIdTipo() {
-		return idTipo;
+
+	public int getTipo() {
+		return tipo;
 	}
 
-	public void setIdTipo(int idTipo) {
-		this.idTipo = idTipo;
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
 	}
 
-	public double getCostoContratacion() {
-		return costoContratacion;
+
+	public double getCosto() {
+		return costo;
 	}
 
-	public void setCostoContratacion(double costoContratacion) {
-		this.costoContratacion = costoContratacion;
+
+	public void setCosto(double costo) {
+		this.costo = costo;
 	}
 
-	public double getCostoAsegurado() {
-		return costoAsegurado;
+
+	public double getCostoMax() {
+		return costoMax;
 	}
 
-	public void setCostoAsegurado(double costoAsegurado) {
-		this.costoAsegurado = costoAsegurado;
-	}
 
-	@Override
-	public String toString() {
-		return "Seguro [idSeguro=" + idSeguro + ", descripcion=" + descripcion + ", idTipo=" + idTipo
-				+ ", costoContratacion=" + costoContratacion + ", costoAsegurado=" + costoAsegurado + "]";
+	public void setCostoMax(double costoMax) {
+		this.costoMax = costoMax;
 	}
 	
+	public void setId(int id) {
+		this.ID = id;
+	}
+	
+	public int getId() {
+		return this.ID;
+	}
 	
 }

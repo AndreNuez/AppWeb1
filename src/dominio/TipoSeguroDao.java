@@ -12,43 +12,46 @@ public class TipoSeguroDao {
 	private String host = "jdbc:mysql://localhost:3306/";
 	private String user = "root";
 	private String pass = "root";
-	private String dbName = "segurosgroup";
+	private String dbName = "SegurosGroup";
 	
-	public ArrayList<TipoSeguro> obtenerTipoSeguro() {
+	public ArrayList<TipoSeguro> obtenerTipoSeguros() {
 
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ArrayList<TipoSeguro> lista = new ArrayList<TipoSeguro>();
+		
+		Connection conn = null;
+		try{
+			conn = DriverManager.getConnection(host + dbName, user, pass);
+			Statement st = conn.createStatement();
 			
-			ArrayList<TipoSeguro> lista = new ArrayList<TipoSeguro>();
-			Connection conn = null;
+			ResultSet rs = st.executeQuery("Select idTipo,descripcion FROM tipoSeguros");
 			
-			try{
-				conn = DriverManager.getConnection(host + dbName, user, pass);
-				Statement st = conn.createStatement();
+			while(rs.next()){
 				
-				ResultSet rs = st.executeQuery("Select idTipo,descripcion FROM tiposeguros");
+				TipoSeguro tipoSeguroRs = new TipoSeguro();
+				tipoSeguroRs.setIdTipo(rs.getInt("idTipo"));
+				tipoSeguroRs.setDescripcion(rs.getString("descripcion"));
+
 				
-				while(rs.next()){
-					
-					TipoSeguro seguroRs = new TipoSeguro();
-					seguroRs.setIdTipo(rs.getInt("idTipo"));
-					seguroRs.setDescripcion(rs.getString("descripcion"));
-					
-					lista.add(seguroRs);
-				}
-				conn.close();
-			
-			}catch(Exception e){
-				e.printStackTrace();
+				lista.add(tipoSeguroRs);
 			}
+			conn.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+		
+		}
 		
 		return lista;
 	}
 	
-	public int obtenerIdTipo (String desc) {
+public int obtenerIdTipo (String desc) {
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -61,15 +64,11 @@ public class TipoSeguroDao {
 		
 		try{
 			cn = DriverManager.getConnection(host + dbName, user, pass);
-			String query = "SELECT * FROM tiposeguros WHERE descripcion = ?";
-			
-			PreparedStatement pst = cn.prepareStatement(query);
-			
-			pst.setString(2,desc);
-			ResultSet rs = pst.executeQuery(query);
-			rs.next();
-			
-			id = rs.getInt(1);
+			PreparedStatement miSentencia = cn.prepareStatement("SELECT * FROM tiposeguros WHERE descripcion = ?");
+			miSentencia.setString(1, desc);
+			ResultSet resultado = miSentencia.executeQuery();
+			resultado.next();
+			id = resultado.getInt(1);
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -77,36 +76,30 @@ public class TipoSeguroDao {
 		
 		return id;
 	}
+
+public String obtenerDescripcion (int idTipo) {
 	
-	/*public TipoSeguro obtenerIdTipo (String desc) {
-			
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-			
-			TipoSeguro ts = new TipoSeguro();
-			Connection cn = null;
-			
-			try{
-				cn = DriverManager.getConnection(host + dbName, user, pass);
-				String query = "SELECT * FROM tiposeguros WHERE descripcion = ?";
-				
-				PreparedStatement pst = cn.prepareStatement(query);
-				
-				pst.setString(2, desc);
-				ResultSet rs = pst.executeQuery(query);
-				rs.next();
-				
-				ts.setIdTipo(rs.getInt(1)); 
-				ts.setDescripcion(rs.getString(2));
-				
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-			
-			return ts;
-		}*/
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+	} catch (ClassNotFoundException e) {
+		e.printStackTrace();
+	}
 	
+	String desc="";
+	Connection cn = null;
+	
+	try{
+		cn = DriverManager.getConnection(host + dbName, user, pass);
+		PreparedStatement miSentencia = cn.prepareStatement("SELECT * FROM tiposeguros WHERE idTipo = ?");
+		miSentencia.setInt(1, idTipo);
+		ResultSet resultado = miSentencia.executeQuery();
+		resultado.next();
+		desc = resultado.getString(2);
+		
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	
+	return desc;
+}
 }
